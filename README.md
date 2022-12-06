@@ -1,5 +1,7 @@
 # 3D Trajectory Plotting
 
+![Demo](docs/../doc/demo.png)
+
 ## Usage
 
 ```bash

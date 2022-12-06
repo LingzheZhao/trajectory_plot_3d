@@ -17,7 +17,6 @@ def test_compare_two_trajactories(traj_01_, traj_gt_):
               label="method 01",
               alpha=0.5)
 
-
     plot.traj(ax, plot_mode, traj_gt_,
               style="--",
               color="gray",
@@ -25,11 +24,15 @@ def test_compare_two_trajactories(traj_01_, traj_gt_):
               alpha=0.5)
 
     # marker_scale is the size of the pose pyramids
-    camera_plot.compare_two_trajactories(ax, traj_gt_, traj_01_, marker_scale=0.005)
+    camera_plot.compare_two_trajactories(
+        ax, traj_gt_, traj_01_, marker_scale=0.005)
 
     # This is an alternative to the pyramids
-    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, 0.02)
-    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, 0.02)
+    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, 0.005)
+    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, 0.005)
+
+    # disable axis grid
+    plt.axis('off')
 
     a.add_figure("compare two trajactories", fig)
     a.show()
@@ -60,14 +63,18 @@ def test_compare_three_trajactories(traj_01_, traj_02_, traj_gt_):
               alpha=0.5)
 
     # This is an alternative to the pyramids
-    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, 0.02)
-    # plot.draw_coordinate_axes(ax, traj_02_, plot_mode, 0.02)
-    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, 0.02)
+    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, 0.005)
+    # plot.draw_coordinate_axes(ax, traj_02_, plot_mode, 0.005)
+    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, 0.005)
 
     # marker_scale is the size of the pose pyramids
     camera_plot.draw_pyramids(ax, traj_01_, marker_scale=0.005, color='r')
     camera_plot.draw_pyramids(ax, traj_02_, marker_scale=0.005, color='b')
     camera_plot.draw_pyramids(ax, traj_gt_, marker_scale=0.005, color='gray')
+
+    # disable axis grid
+    plt.axis('off')
+
     a.add_figure("compare three trajactories", fig)
     a.show()
 
@@ -88,6 +95,7 @@ def main():
 
     traj_01_synced.align(gt_synced01, correct_scale=True)
     traj_02_synced.align(gt_synced02, correct_scale=True)
+
     test_compare_two_trajactories(traj_01_synced, gt_synced01)
     test_compare_three_trajactories(traj_01_synced, traj_02_synced, traj_gt)
 
