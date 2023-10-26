@@ -5,7 +5,7 @@ from evo.core.sync import associate_trajectories
 import camera_plot
 
 
-def test_compare_two_trajactories(traj_01_, traj_gt_):
+def test_compare_two_trajactories(traj_01_, traj_gt_, marker_scale=0.005, show_camera_indices=False):
     a = plot.PlotCollection("test")
     fig = plt.figure()
     plot_mode = plot.PlotMode["xyz"]
@@ -23,13 +23,17 @@ def test_compare_two_trajactories(traj_01_, traj_gt_):
               label="GT",
               alpha=0.5)
 
+    if show_camera_indices:
+        camera_plot.draw_camera_indices(ax, traj_01_, color="r")
+        camera_plot.draw_camera_indices(ax, traj_gt_, color="gray")
+
     # marker_scale is the size of the pose pyramids
     camera_plot.compare_two_trajactories(
-        ax, traj_gt_, traj_01_, marker_scale=0.005)
+        ax, traj_gt_, traj_01_, marker_scale=marker_scale)
 
     # This is an alternative to the pyramids
-    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, 0.005)
-    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, 0.005)
+    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, marker_scale)
+    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, marker_scale)
 
     # disable axis grid
     plt.axis('off')
@@ -38,7 +42,7 @@ def test_compare_two_trajactories(traj_01_, traj_gt_):
     a.show()
 
 
-def test_compare_three_trajactories(traj_01_, traj_02_, traj_gt_):
+def test_compare_three_trajactories(traj_01_, traj_02_, traj_gt_, marker_scale=0.005, show_camera_indices=False):
     a = plot.PlotCollection("test")
     fig = plt.figure()
     plot_mode = plot.PlotMode["xyz"]
@@ -62,15 +66,20 @@ def test_compare_three_trajactories(traj_01_, traj_02_, traj_gt_):
               label="GT",
               alpha=0.5)
 
+    if show_camera_indices:
+        camera_plot.draw_camera_indices(ax, traj_01_, color="r")
+        camera_plot.draw_camera_indices(ax, traj_02_, color="b")
+        camera_plot.draw_camera_indices(ax, traj_gt_, color="gray")
+
     # This is an alternative to the pyramids
-    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, 0.005)
-    # plot.draw_coordinate_axes(ax, traj_02_, plot_mode, 0.005)
-    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, 0.005)
+    # plot.draw_coordinate_axes(ax, traj_01_, plot_mode, marker_scale)
+    # plot.draw_coordinate_axes(ax, traj_02_, plot_mode, marker_scale)
+    # plot.draw_coordinate_axes(ax, traj_gt_, plot_mode, marker_scale)
 
     # marker_scale is the size of the pose pyramids
-    camera_plot.draw_pyramids(ax, traj_01_, marker_scale=0.005, color='r')
-    camera_plot.draw_pyramids(ax, traj_02_, marker_scale=0.005, color='b')
-    camera_plot.draw_pyramids(ax, traj_gt_, marker_scale=0.005, color='gray')
+    camera_plot.draw_pyramids(ax, traj_01_, marker_scale=marker_scale, color='r')
+    camera_plot.draw_pyramids(ax, traj_02_, marker_scale=marker_scale, color='b')
+    camera_plot.draw_pyramids(ax, traj_gt_, marker_scale=marker_scale, color='gray')
 
     # disable axis grid
     plt.axis('off')
@@ -96,8 +105,8 @@ def main():
     traj_01_synced.align(gt_synced01, correct_scale=True)
     traj_02_synced.align(gt_synced02, correct_scale=True)
 
-    test_compare_two_trajactories(traj_01_synced, gt_synced01)
-    test_compare_three_trajactories(traj_01_synced, traj_02_synced, traj_gt)
+    test_compare_two_trajactories(traj_01_synced, gt_synced01, marker_scale=0.005, show_camera_indices=False)
+    test_compare_three_trajactories(traj_01_synced, traj_02_synced, traj_gt, marker_scale=0.005, show_camera_indices=False)
 
 
 if __name__ == "__main__":

@@ -55,6 +55,13 @@ def get_camera_mesh(pose, scale=1.):
     return wireframe
 
 
+def draw_camera_indices(ax, traj, fontsize=10, color="k"):
+    """Draw camera indices into the pyplot"""
+    for i, pose in enumerate(traj.poses_se3):
+        x, y, z = pose[:3, 3]
+        ax.text(x, y, z, str(i), fontsize=fontsize, color=color)
+
+
 def draw_pyramids(ax: plt.Axes,
                   traj: trajectory.PosePath3D,
                   marker_scale: float = 1.,
